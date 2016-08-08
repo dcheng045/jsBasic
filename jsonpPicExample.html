@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript">
+    function onClick()
+    {
+      var img=new Image();
+      img.src='http://pic12.nipic.com/20110103/3800329_124553022195_2.jpg';
+      img.onerror=function(){
+        alert('error');
+      }
+      img.onload=function(){
+        alert('success');
+      }
+      document.body.appendChild(img);
+    }
+    </script>
+
+
+  </head>
+  <body>
+    <input type="button" value="click me!" onclick="onClick()"/>
+  </body>
+</html>
+
+这里新建了一个img对象，给出的url是博客地址'http://www.jb51.net';，这里是个error事件，所以弹出error；
+如果将URL改为一张图片http://images.jb51.net//710118/o_MacBook%20Air.png，就会弹出onload加载信息success，从而实现了简单的跨域。
+使用图片ping跨域只能发送get请求，并且不能访问响应的文本，只能监听是否响应而已，可以用来追踪广告点击。

@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript">
+    function abc(re) {
+        alert(re.trans_result[0].src + "翻译的结果为\"" + re.trans_result[0].dst+"\"");
+    }
+    function onClick()
+    {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        var src = document.getElementById("word").value;
+        script.src = "http://api.fanyi.baidu.com/api/trans/vip/translate?q="+src+"&from=en&to=zh&appid=2015063000000001&salt=1435660288&sign=f89f9594663708c1605f3d736d01d2d4&callback=abc";
+
+        document.body.appendChild(script);
+    }
+</script>
+</head>
+
+<body>
+    <input type="text" value="apple" id="word"/>
+    <input type="button" value="click me!" onclick="onClick()"/>
+</body>
+</html>
+
+
+服务器代码例子，其实百度翻译的服务器已经实现了这个方法：
+abc({"from":"en","to":"zh","trans_result":[{"src":"chair","dst":"\u6905\u5b50"}]});
+
+回顾一下实际上流程很简单：
+1.客户端根据条件生成一个url，包含请求数据(如"apple")和回调函数名(如"abc")
+2.客户端写好回调函数function abc(re){}
+3.服务端接收此请求，生成json数据，并根据回调函数名，动态生成类似 abc(json("chair"))这样的数据返回给客户端。
+4.客户端执行abc(json("chair"))

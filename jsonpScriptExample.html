@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript">
+        function abc(re) {
+            alert(re.trans_result[0].src + "翻译的结果为\"" + re.trans_result[0].dst + "\"");
+        }
+    </script>
+    <script type="text/javascript" language="javascript" src="http://api.fanyi.baidu.com/api/trans/vip/translate?q=apple&from=en&to=zh&appid=2015063000000001&salt=1435660288&sign=f89f9594663708c1605f3d736d01d2d4&callback=abc"></script>
+
+  </head>
+  <body>
+  </body>
+</html>
+
+
+callback方法是定义在客户端的script脚本里面的，方法名字不一定叫callback
+只是跟在url的最后面，用&与前面的隔开，比如&callback=showTranslateResult
+方法的定义，在页面的script标签里面，定义一个方法
+function showTranslateResult(result) {
+  alert(result.trans_result[0].src + "翻译结果为\"" + result.trans_result[0].dst + "\"");
+}
+
+
+src="http://api.fanyi.baidu.com/api/trans/vip/translate?
+q=apple
+&from=en
+&to=zh
+&appid=2015063000000001
+&salt=1435660288
+&sign=f89f9594663708c1605f3d736d01d2d4
+&callback=abc"

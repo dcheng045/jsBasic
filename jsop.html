@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript">
+      function call(data){
+       alert(data.city);
+       alert(data.country_name);
+       alert(data.time_zone);
+      }
+    </script>
+    <script type="text/javascript" src='http://freegeoip.net/json/?callback=call'></script>
+  </head>
+  <body>
+  </body>
+</html>
+
+我们把脚本的src设置为http://freegeoip.net/json/?callback=call，这是一个获取用户ip地址的api（有兴趣的可以点击这里查看），
+然后将callback作为一个参数拼接在URL后，返回的json数据就会作为callback的参数，在这里callback我们定义为call函数，
+即返回的json数据就会作为call的参数传进去，
+这个call函数仅仅弹出用户的城市city。笔者这里的输出结果是河北。其他ip信息可以查看官网，上面有详细的列表，比如country_name，time_zone等。

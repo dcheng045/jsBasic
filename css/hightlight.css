@@ -1,0 +1,24 @@
+/* Add some spacing */
+ul, div {
+    margin-bottom: 10px;
+}
+
+/* Default block styles */
+div {
+    padding: 10px;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+}
+
+/* Change its appearance when it's matched */
+div:target {
+  border-color: #9c9c9c;
+  box-shadow: 0 0 4px #9c9c9c;
+}
+
+img {
+  position: absolute;
+}
+li:target img {
+  z-index: 100;
+}
