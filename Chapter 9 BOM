@@ -1,0 +1,250 @@
+BOM有window对象，location对象，navigator对象
+window上定义的变量可以删除delete window.age， 全局定义的自动成为window的变量，不可以delete。
+BOM是JS访问浏览器的接口，也是ES规定的Global对象。
+
+top.Frames[]
+Frames[]
+window.Frames[]
+
+top, parent, self
+
+screenLeft, screenTop 窗口相对于屏幕
+screenX, screenY
+moveTo()
+moveBy()
+
+innerWidth
+innerHeight
+outerWidth
+outerHeight
+clientWidth
+clientHeight
+
+取得页面视口的大小
+var pageWidth = window.innerWidth,
+        pageHeight = window.innerHeight;
+    if (typeof pageWidth != "number"){
+        if (document.compatMode == "CSS1Compat"){
+            pageWidth = document.documentElement.clientWidth;
+            pageHeight = document.documentElement.clientHeight;
+        } else {
+            pageWidth = document.body.clientWidth;
+            pageHeight = document.body.clientHeight;
+        }
+}
+
+
+resizeTo()
+resizeBy()
+
+window.open() 4个参数， url, 窗口目标，窗口特性字符串，bool值表示新页面是否取代浏览器历史记录中当前加载页面。
+window.open("http://www.wrox.com/","wroxWindow",
+                "height=400,width=400,top=10,left=10,resizable=yes");
+window.close()
+top.close()
+window.open是有返回值的，返回的window是新打开的window。
+windowOpened.close()
+windowOpened.closed 检测新打开的window是否被关闭了
+windowOpened.opener = null
+通过opener属性实现手动跟踪window历史， 如果把opener设置为null，那么表明告诉浏览器新建的标签页与打开他的标签页不通信，切断联系。
+
+有的浏览器会内置弹出窗口屏蔽程序，这时window.open()返回null
+有的浏览器或其他程序阻止弹出窗口，window.open() 会抛错。
+
+为什么会有 间歇调用setInterval(), 超时调用setTimeout() 因为JS是单线程的。
+由于传递字符串可能导致性能损失,因此不建议以字符串作为 第一个参数。而是传进去一个function作为第一个参数。
+第二个参数是一个表示等待多长时间的毫秒数,但经过该时间后指定的代码不一定会执行。
+setTimeout()的第二个 参数告诉 JavaScript 再过多长时间把当前任务添加到队列中。
+
+
+JavaScript 是一个单线程序的解释器,因此一定时间内只能执行一段代码。为了控制要执行的代码,
+就 有一个 JavaScript 任务队列。这些任务会按照将它们添加到队列的顺序执行。
+
+setTimeout()的第二个 参数告诉 JavaScript 再过多长时间把当前任务添加到队列中。
+如果队列是空的,那么添加的代码会立即 执行;如果队列不是空的,那么它就要等前面的代码执行完了以后再执行。
+调用 setTimeout()之后,该方法会返回一个数值 ID,表示超时调用。这个超时调用 ID 是计划执 行代码的唯一标识符,可以通过它来取消超时调用。
+要取消尚未执行的超时调用计划,可以调用 clearTimeout()方法并将相应的超时调用 ID 作为参数传递给它,如下所示。
+
+
+var timeoutId = setTimeout(function() {
+    alert("Hello world!");
+}, 1000);
+//注意:把它取消 clearTimeout(timeoutId);
+
+setInterval()至间歇调用被取消或 者页面被卸载。
+//不建议传递字符串!
+setInterval ("alert('Hello world!') ", 10000);
+//推荐的调用方式 setInterval (function() {
+    alert("Hello world!");
+}, 10000);
+
+
+取消 间歇调用的重要性要远远高于取消超时调用,因为在不加干涉的情况下,间歇调用将会一直执行到页面 卸载。
+
+一般认为,使用超时调用来模拟间歇调用的是一种最佳模式。在开 发环境下,很少使用真正的间歇调用,原因是后一个间歇调用可能会在前一个间歇调用结束之前启动。
+而像前面示例中那样使用超时调用,则完全可以避免这一点。所以,最好不要使用间歇调用。
+
+8.1.7 系统对话框
+alert()、confirm()和 prompt()方法可以调用系统对话框
+它们的外观由操作系统及(或)浏览器设置 决定,而不是由 CSS 决定。
+
+显示这 些对话框的时候代码会停止执行,而关掉这些对话框后代码又会恢复执行。
+
+
+为了确定用户是单击了 OK 还是 Cancel,可以检查 confirm()方法返回的布尔值:true 表示单击
+ 了 OK,false 表示单击了 Cancel 或单击了右上角的 X 按钮。确认对话框的典型用法如下。
+    if (confirm("Are you sure?")) {
+        alert("I'm so glad you're sure! ");
+    } else {
+        alert("I'm sorry to hear you're not sure. ");
+}
+
+ var result = prompt("What is your name? ", "");
+    if (result !== null) {
+        alert("Welcome, " + result);
+    }
+
+//显示“打印”对话框 window.print();
+//显示“查找”对话框 window.find();
+
+========================== location对象, assign(), replace(), reload()
+它既是 window 对象的属性,也是document 对象的属性
+window.location 和 document.location 引用的是同一个对象。
+
+location 对象的用处：
+1. 它保存着当前文档的信息,
+2. 它将 URL 解析为独立的片段,让 开发人员可以通过不同的属性访问这些片段。下表列出了 location 对象的所有属性
+
+8.2.1 查询字符串参数
+创建一个函数,用以解析查询字符串,然后返 回包含所有参数的一个对象:
+
+function getQueryStringArgs(){
+  //取得查询字符串并去掉开头的问号
+  var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+  //保存数据的对象 args = {},
+  //取得每一项
+  items = qs.length ? qs.split("&") : [],
+  item = null,
+  name = null,
+  value = null,
+  //在 for 循环中使用
+  i = 0,
+  len = items.length;
+  //逐个将每一项添加到 args 对象中
+  for (i=0; i < len; i++) {
+    item = items[i].split("=");
+    name = decodeURIComponent(item[0]); //因为查询字符串应该是被编码过的
+    value = decodeURIComponent(item[1]);
+    if (name.length) {
+        args[name] = value;
+    }
+  }
+  return args;
+}
+
+8.2.2 位置操作,改变浏览器位置
+location.assign()
+location.replace()
+location.reload()
+location.hash
+location.href
+location.search
+location.hostname
+location.host
+location.pathName
+location.port
+location.protocol
+
+
+location.assign("http://www.wrox.com");
+window.location = "http://www.wrox.com";
+location.href = "http://www.wrox.com"; // 最常用
+
+//假设初始 URL 为 http://www.wrox.com/WileyCDA/
+//将 URL 修改为"http://www.wrox.com/WileyCDA/#section1"
+location.hash = "#section1";
+//将 URL 修改为"http://www.wrox.com/WileyCDA/?q=javascript"
+location.search = "?q=javascript";
+//将 URL 修改为"http://www.yahoo.com/WileyCDA/"
+location.hostname = "www.yahoo.com";
+//将 URL 修改为"http://www.yahoo.com/mydir/"
+location.pathname = "mydir";
+//将 URL 修改为"http://www.yahoo.com:8080/WileyCDA/"
+location.port = 8080;
+每次修改 location 的属性(hash 除外),页面都会以新 URL 重新加载
+
+
+当通过上述任何一种方式修改 URL 之后,浏览器的历史记录中就会生成一条新记录,
+因此用户通 过单击“后退”按钮都会导航到前一个页面。要禁用这种行为,可以使用 replace()方法。
+location.replace("http://www.wrox.com/");
+
+与位置有关的最后一个方法是 reload(),作用是重新加载当前显示的页面。如果调用 reload()
+location.reload(); //重新加载(有可能从缓存中加载)
+location.reload(true); //重新加载(从服务器重新加载)
+
+
+===============8.3 navigator对象
+识别客户端浏览器的事实标 准。
+
+8.3.1 检测插件 navigator.plugins 数组
+ name:插件的名字。
+ description:插件的描述。
+ filename:插件的文件名。
+ length:插件所处理的 MIME 类型数量
+
+plugins 集合有一个名叫 refresh()的方法,用于刷新 plugins 以反映最新安 装的插件。
+这个方法接收一个参数:表示是否应该重新加载页面的一个布尔值。如果 将这个值设置为 true,
+则会重新加载包含插件的所有页面;否则,只更新 plugins 集合,不重新加载页面。
+
+
+//检测插件(在 IE 中无效)
+function hasPlugin(name){
+  name = name.toLowerCase();
+  for (var i=0; i < navigator.plugins.length; i++){
+    if (navigator. plugins [i].name.toLowerCase().indexOf(name) > -1) {
+      return true;
+    }
+  }
+    return false;
+}
+//检测 Flash alert(hasPlugin("Flash"));
+//检测 QuickTime alert(hasPlugin("QuickTime"));
+
+检测 IE 中的插件比较麻烦,因为 IE 不支持 Netscape 式的插件。在 IE 中检测插件的唯一方式就是 使用专有的 ActiveXObject 类型,
+//检测 IE 中的插件
+function hasIEPlugin(name){
+    try {
+        new ActiveXObject(name);
+        return true;
+    } catch (ex){
+        return false;
+} }
+//检测 Flash alert(hasIEPlugin("ShockwaveFlash.ShockwaveFlash"));
+//检测 QuickTime alert(hasIEPlugin("QuickTime.QuickTime"));
+
+鉴于检测这两种插件的方法差别太大,因此典型的做法是针对每个插件分别创建检测函数,而不是 使用前面介绍的通用检测方法。
+
+8.3.2 注册处理程序
+navigator.registerContentHandler
+navigator.registerProtocolHandler
+
+========== 8.4 screen对象,在编程中用处不大
+对象基本上只 用来表明客户端的能力,其中包括浏览器窗口外部的显示器的信息,如像素宽度和高度等。
+用到其中的信息来调整浏览器窗口大小,使其占据屏幕的可用空间
+window.resizeTo(screen.availWidth, screen.availHeight);
+
+========== 8.5 history对象
+history 对象保存着用户上网的历史记录
+go()方法可以在用户的历史记录中任意跳转
+//后退一页 history.go(-1);
+//前进一页 history.go(1);
+//前进两页 history.go(2);
+
+//跳转到最近的 wrox.com 页面 history.go("wrox.com");
+//跳转到最近的 nczonline.net 页面 history.go("nczonline.net");
+//后退一页 history.back();
+//前进一页 history.forward();
+
+
+if (history.length == 0){ //这应该是用户打开窗口后的第一个页面
+}
