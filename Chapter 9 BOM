@@ -47,7 +47,7 @@ windowOpened.close()
 windowOpened.closed 检测新打开的window是否被关闭了
 windowOpened.opener = null
 通过opener属性实现手动跟踪window历史， 如果把opener设置为null，那么表明告诉浏览器新建的标签页与打开他的标签页不通信，切断联系。
-
+新建的window对象，有一个opener属性，保存着打开它的原始窗口对象，指向调用window.open()的窗口或框架。windowOpener.opener == window // true
 有的浏览器会内置弹出窗口屏蔽程序，这时window.open()返回null
 有的浏览器或其他程序阻止弹出窗口，window.open() 会抛错。
 
@@ -156,6 +156,7 @@ location.port
 location.protocol
 
 
+三个效果一样
 location.assign("http://www.wrox.com");
 window.location = "http://www.wrox.com";
 location.href = "http://www.wrox.com"; // 最常用

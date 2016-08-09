@@ -192,7 +192,7 @@ function f2()
 }
 f2() === undefined; //true 严格模式
 
-This题目
+This题目一：
 var length = 10;
 function fn() {
   console.log(this.length);
@@ -208,6 +208,30 @@ var obj = {
 };
 
 obj.method(fn, 1);
+
+This题目二：依然不懂
+function JSClass() {
+  this.m_Text = 'division element';
+  this.m_Element = document.createElement('div');
+  this.m_Element.innerHTML = this.m_Text;
+  this.m_Element.addEventListener('click', this.func);
+  // this.m_Element.onclick = this.func;
+}
+ 
+JSClass.prototype.Render = function() {
+  document.body.appendChild(this.m_Element);
+}
+ 
+JSClass.prototype.func = function() {
+  alert(this.m_Text);
+};
+ 
+var jc = new JSClass(); // JSClass { m_Text: 'division element', m_Element: '<div onclick="this.func">division element</div>'}
+jc.Render();  // undefined 因为这个方法，只是把div节点加到body里面去，并没有打印什么东西，所以输出undefined
+jc.func();  // division element
+
+jc.func()解释(没有道理)：this其实已经指向了this.m_Element，因为是this.m_Element 调用的 addEventListener函数，
+所以内部的this全指向它了。可以试着加上一行代码this.m_Element.m_Text = ‘hello world’，就会 alert 出hello world了
 
 
 
