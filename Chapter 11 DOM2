@@ -1,1 +1,13 @@
+DOM2 DOM3 与DOM1有何不同？
+
+扩展的DOM API
+1. 更多交互功能
+2. 更高级的XML
+3. 分为许多模块
+
+
+DOM2核心提供： 命名空间， 命名冲突，xmlns特性
+前缀 xmlns: xhtml
+混合使用 XHTML 和 SVG 语言
+
 Selectors API Level 1 的核心是两个方法:querySelector()和 querySelectorAll()

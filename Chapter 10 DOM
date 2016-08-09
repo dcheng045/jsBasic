@@ -17,18 +17,22 @@ nodeType 属性，节点类型由在 Node 类型中定义的下列 12 个数值�
 每个节点都有一个 childNodes 属性,其中保存着一个 NodeList 对象
 Array.prototype.slice.call(arguments)能将具有length属性的对象转成数组，
 除了IE下的节点集合（因为ie下的dom对象是以com对象的形式实现的，js对象与com对象不能进行转换）
-
+firstChild = childNodes[0]
+lastChild = childNodes[s.length -1]
  parentNode 属性
  previousSibling 属性
  nextSibling 属性
  hasChildNodes()
+ ownerDocument
 
 appendChild()
+appendAfter()
 insertBefore()
 replaceChild()
 removeChild()
-cloneNode()在参数为 true 的情况下,执行深复制,也就是复制节点及其整个子节点树;在参数为 false 的情况下,执行浅复制, 即只复制节点本身。
-复制后返回的节点副本属于文档所有,但并没有为它指定父节点。因此,这个节点 副本就成为了一个“孤儿
+cloneNode(true)执行深复制,也就是复制节点及其整个子节点树;
+cloneNode(false)执行浅复制, 即只复制节点本身。
+复制后返回的节点副本属于文档所有,但并没有为它指定父节点。因此,这个节点 副本就成为了一个"孤儿"
 normalize()
 
 
@@ -53,7 +57,7 @@ var referrer = document.referrer;
 换句话说,在将 document.domain 设置为"wrox.com"之后,就不能再将其 设置回"p2p.wrox.com",否则将会导致错误
 
 var div = document.getElementById("myDiv"); //取得<div>元素的引用
-var images = document.getElementsByTagName("img");
+var images = document.getElementsByTagName("img"); //返回一个HTMLCollection
 var myImage = images.namedItem("myImage");
 var myImage = images["myImage"];
 var radios = document.getElementsByName("color");
@@ -61,8 +65,7 @@ var radios = document.getElementsByName("color");
  document.anchors,包含文档中所有带 name 特性的<a>元素;
  document.forms,包含文档中所有的<form>元素,与 document.getElementsByTagName("form")
 得到的结果相同;
-document.images,包含文档中所有的<img>元素,与 document.getElementsByTagName
-("img")得到的结果相同;
+document.images,包含文档中所有的<img>元素,与 document.getElementsByTagName("img")得到的结果相同;
  document.links,包含文档中所有带 href 特性的<a>元素。
 
 DOM1 级只为 document.implementation 规定了一个方法,即 hasFeature()
@@ -74,6 +77,15 @@ var hasXmlDom = document.implementation.hasFeature("XML", "1.0");
 
 <div id="myDiv" class="bd" title="Body text" lang="en" dir="ltr"></div>
 
+
+element类型的方法：
+.id
+.getAttribute("id")
+.setAttribute("class", "ft")
+
+
+
+//得到的是element类型的变量，
 var div = document.getElementById("myDiv");
 alert(div.id); //"myDiv""
 alert(div.className); //"bd"
@@ -115,10 +127,15 @@ var div = document.createElement("div");
     div.className = "box";
 document.body.appendChild(div);
 
+
+data- 前缀，自定义attribute
+
+
 ============ 10.2 DOM 操作技术
 
 10.2.1 动态脚本
-var script = document.createElement("script"); script.type = "text/javascript";
+var script = document.createElement("script");
+script.type = "text/javascript";
 var code = "function sayHi(){alert('hi');}";
 try {
     script.appendChild(document.createTextNode("code"));

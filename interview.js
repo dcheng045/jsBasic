@@ -273,6 +273,71 @@ console.log(ans[0][0] + ': ' + ans[0].length);
 
 
 
+方法一：
+数组去重，利用indexof, 新数组.indexof(i)
+Array.prototype.unique1 = function()
+{
+	var n = []; //一个新的临时数组
+	for(var i = 0; i < this.length; i++) //遍历当前数组
+	{
+		//如果当前数组的第i已经保存进了临时数组，那么跳过，
+		//否则把当前项push到临时数组里面
+		if (n.indexOf(this[i]) == -1) n.push(this[i]);
+	}
+	return n;
+}
+
+
+方法二：
+数组去重，利用hash表也就是object的属性不重复的特性，同时维护一个object和一个新数组,
+下标的引用要比用indexOf搜索数组快的多。结果表明第二种方法远远快于其他两种方法。
+但是内存占用方面应该第二种方法比较多，因为多了一个hash表。这就是所谓的空间换时间。
+Array.prototype.unique2 = function()
+{
+	var n = {},
+      r=[]; //n为hash表，r为临时数组
+	for(var i = 0; i < this.length; i++) //遍历当前数组
+	{
+		if (!n[this[i]]) //如果hash表中没有当前项
+		{
+			n[this[i]] = true; //存入hash表
+			r.push(this[i]); //把当前数组的当前项push到临时数组里面
+		}
+	}
+	return r;
+}
+
+方法三：
+数组去重，旧数组.indexof(i) == i，表明是第一次出现，应该加入新数组中，如果不是i，那么不是第一次出现，不加入新数组
+Array.prototype.unique3 = function()
+{
+	var n = [this[0]]; //结果数组
+	for(var i = 1; i < this.length; i++) //从第二项开始遍历
+	{
+		//如果当前数组的第i项在当前数组中第一次出现的位置不是i，
+		//那么表示第i项是重复的，忽略掉。否则存入结果数组
+		if (this.indexOf(this[i]) == i) n.push(this[i]);
+	}
+	return n;
+}
+
+方法四：
+先排序，再比较相邻的值
+Array.prototype.unique4 = function()
+{
+	this.sort();
+	var re=[this[0]];
+	for(var i = 1; i < this.length; i++)
+	{
+		if( this[i] !== re[re.length-1])
+		{
+			re.push(this[i]);
+		}
+	}
+	return re;
+}
+
+同方法二
 数组去重，利用obj 的不重复性
 var arr = [1 ,1 ,2, 3, 3, 2, 1];
 Array.prototype.unique = function(){
@@ -292,6 +357,12 @@ Array.prototype.unique = function(){
 
 alert(arr.unique());
 
+方法五：
+Set和Map是ES6中新增的数据结构，Map和Set无法使用下标
+Set直接可以存储不重复的一组key,这个key也可以是对象,字符串等
+ES6标准引入了新的iterable类型，Array、Map和Set都属于iterable类型
+var s = new Set([1, 2, 3, 3, '3']);
+s; // Set {1, 2, 3, "3"}
 
 
 var lang = ["php","java","javascript"];
@@ -306,3 +377,7 @@ alert(lang); //asp,php,javascript
 var replace = lang.splice(1,1,"c#","ruby");
 alert(lang); //asp,c#,ruby，javascript
 alert(replace); //php, 被替换掉得作为返回值
+
+
+js对象每个对象都有自己的唯一标识符
+{} === {} //false
