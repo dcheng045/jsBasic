@@ -1,17 +1,3 @@
-function arrayToString(){
-  var a, b;
-  a = new Array(0,1,3,4);
-  b= a.join("-");
-  console.log(b);
-}
-
-
-function stringToArray() {
-  var s = "abc, bcd, def";
-  ss = s.split(",");
-  console.log(ss);
-}
-
 <!-- 所谓 ArrayLike 对象指具有数组某些行为的对象，表现出来的特征就是具有 length 属性。,
 这一类对象不能调用数组所具有的方法(push/forEach/map之类)，
 最常见的例子是，Arguments，其他诸如HTMLCollection,NodeList如果它们都是数组的子类， -->
@@ -135,3 +121,19 @@ Array.from()妙用, 但是性能比较差
 var arr = Array.from({length:100}).map(function(item,index){return index});
 // Array.from({length:100}) 也是创建了一个包含100个 undefined 的数组，
 // 但是这个数组可以迭代( [].slice.call({length:100})创建的不可迭代 )，可以直接调用 map 方法。
+
+
+
+function arrayToString(){
+  var a, b;
+  a = new Array(0,1,3,4);
+  b= a.join("-");
+  console.log(b);
+}
+
+
+function stringToArray() {
+  var s = "abc, bcd, def";
+  ss = s.split(",");
+  console.log(ss);
+}
