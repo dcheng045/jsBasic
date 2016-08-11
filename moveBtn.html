@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>移动button</title>
+</head>
+<body>
+  <div>
+    <input type="button" id ="button1" value="1" onclick="moveBtn(this);">
+    <input type="button" id ="button2" value="2" />
+  </div>
+  <script type="text/javascript">
+  function moveBtn(obj) {
+            var clone = obj.cloneNode(true);
+            var parent = obj.parentNode;
+            parent.appendChild(clone);
+            parent.removeChild(obj);
+  }
+  </script>
+</body>
+</html>
