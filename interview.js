@@ -86,8 +86,9 @@ console.log(obj.print('wierd'))
 console.log(func.call())
 
 对象的方法，this的值是由调用时的obj。所以第一次输出 obj A awesome
-var func = obj.print 所有func.call是在全局调用，输出lame
-var b = obj, b.desc赋值，所以obj里面的desc就变了, console.log(obj.print('wierd'))输出obj B wierd
+var b = obj, b.desc赋值，（因为是引用）所以obj里面的desc就变了, console.log(obj.print('wierd'))输出obj B wierd
+var func = obj.print 所有func.call是在全局调用,而且没有参数，输出lame
+
 
 题目四：
 写一个js函数，parseQueryString， 用途是把URL参数解析为一个对象并返回。
@@ -141,7 +142,11 @@ function parseQueryString(url) {
   });
   return res;
 }
-
+a.href = url
+a.host
+a.hostname
+a.search
+a.hash
 //http://www.nowcoder.com/questionTerminal/224ff0a9b88640889e47566058b15cc9锻炼操作字符串的能力
 
 参照以下执行结果，实现add函数
@@ -272,6 +277,25 @@ ans.sort(function(a, b) {
 console.log(ans[0][0] + ': ' + ans[0].length);
 
 
+数组去重： Unique
+1. indexof, newArray.indexOf(this[i]) == -1) newArray.push 或者 oldArray.indexOf(this[i]) == i) newArray.push(this[i])
+2. 利用hash表也就是object的属性不重复的特性，同时维护一个object和一个新数组, 下标的引用要比用indexOf搜索数组快的多。牺牲空间，换取时间。
+Array.prototype.unique2 = function()
+{
+	var n = {},
+      r=[]; //n为hash表，r为临时数组
+	for(var i = 0; i < this.length; i++) //遍历当前数组
+	{
+		if (!n[this[i]]) //如果hash表中没有当前项
+		{
+			n[this[i]] = true; //存入hash表
+			r.push(this[i]); //把当前数组的当前项push到临时数组里面
+		}
+	}
+	return r;
+}
+3. 先排序，再比较相邻的值
+4. Set存储不重复的一组key （ES6）
 
 方法一：
 数组去重，利用indexof, 新数组.indexof(i)

@@ -1,6 +1,20 @@
+大众点评面试，创建对象都有哪些方式？
+1. 最简单的var obj = new Object(); obj.name = 'debbie'; obj.sayName = function(){ alert(this.name)}
+2. 或者对象字面量方式
+这两种方法的缺点是：只能创建单个object
 
 
-工厂模式创建对象
+以下的全都是以function打头的，能创建多个object
+1. 工厂模式
+2. 构造函数模式
+3. 原型链模式
+4. 组合使用构造函数模式和原型模式
+构造函数模式用于定义实例属性,
+原型模式用于定义方法和共享的属性。
+结果,每个实例都会有自己的一份实例属性的副本, 但同时又共享着对方法的引用,最大限度地节省了内存。
+另外,这种混成模式还支持向构造函数传递参 数;可谓是集两种模式之长。下面的代码重写了前面的例子。
+
+1. 工厂模式创建对象
 function createPerson(name, age, job) {
   var o = new Object();
   o.name = name;
@@ -17,7 +31,7 @@ var person2 = createPerson("Greg", 27, "Doctor");
 
 
 //////////////
-构造函数模式
+2. 构造函数模式
 function Person(name, age, job){
         this.name = name;
         this.age = age;
@@ -25,8 +39,9 @@ function Person(name, age, job){
         this.sayName = function(){
             alert(this.name);
 }; }
-    var person1 = new Person("Nicholas", 29, "Software Engineer");
-    var person2 = new Person("Greg", 27, "Doctor");
+
+var person1 = new Person("Nicholas", 29, "Software Engineer");
+var person2 = new Person("Greg", 27, "Doctor");
 
  没有显式地创建对象;
  直接将属性和方法赋给了 this 对象;
@@ -77,7 +92,7 @@ Person("Greg", 27, "Doctor"); // 添加到window window.sayName(); //"Greg"
 
 // 在对象 o 的作用域中调用的,因此调用后 o 就拥有了所有属性和 sayName() 方法。
 var o = new Object();
-Person.call(o, "Kristen", 25, "Nurse"); o.sayName(); //"Kristen"
+Person.call(o, "Kristen", 25, "Nurse"); o.sayName(); //"Kristen" this就指向这个o了
 
 ///////////////
 6.2.3 原型模式
@@ -129,7 +144,7 @@ alert(person2.name); //"Nicholas"——来自原型
 
 添加这 个属性只会阻止我们访问原型中的那个属性,但不会修改那个属性。
 
-使用 delete 操作符则可以完全删 除实例属性,从而让我们能够重新访问原型中的属性
+使用 delete 操作符则可以完全删除实例属性,从而让我们能够重新访问原型中的属性
 delete person1.name;
 
 

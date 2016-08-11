@@ -1,12 +1,14 @@
-Object上有哪些方法:
+大众点评面试，Object上有哪些方法:
 
 1. Object.getPrototypeOf(person1) == Person.prototype; //true
-getPrototypeOf是Object上的方法
+返回一个实例的原型
 
-2. Object.keys()方法，例子：Object.keys(Person.prototype);Object.keys(p1);
-要取得对象上所有可枚举的实例属性，这个方法
-接收一个对象作为参数,返回一个包含所有可枚举属性的字符串数组。例如:
+2. Object.keys()方法，
+Object.keys(Person.prototype);
+Object.keys(p1);
+接收一个对象原型，或者实例作为参数,返回一个包含所有可枚举属性的字符串数组。
 
+例如:
 var keys = Object.keys(Person.prototype);
 alert(keys);       // "name,age,job,sayName"
 var p1 = new Person();
